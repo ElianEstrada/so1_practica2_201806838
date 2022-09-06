@@ -10,10 +10,12 @@ MODULE_DESCRIPTION("Ram Module - Get data for free memory, used memory and total
 MODULE_LICENSE("GPL");
 
 struct sysinfo sys_info;
+char *name = "ram_201806838";
 
 static int content_file(struct seq_file *file, void *v) {
     si_meminfo(&sys_info);
-    seq_printf(file, "{\"total\": %ld", (sys_info.totalram * 4) / 1024);
+    //seq_printf(file, "{\"total\": %ld", (sys_info.totalram * 4) / 1024);
+    seq_printf(file, "{\"total\": %ld", (sys_info.totalram << PAGE_SHIFT) / (1024 * 1024));
     seq_printf(file, ", \"used\": %ld", ((sys_info.totalram - sys_info.freeram) * 4) / 1024);
     seq_printf(file, "}\n");
     return 0;
@@ -29,13 +31,13 @@ static struct proc_ops data = {
 };
 
 static int __init add_module(void) {
-    proc_create("ram_201806838", 0, NULL, &data);
+    proc_create(name, 0, NULL, &data);
     printk(KERN_INFO "201806838\n");
     return 0;
 }
 
 static void __exit remove_module(void) {
-    remove_proc_entry("ram_201806838", NULL);
+    remove_proc_entry(name, NULL);
     printk(KERN_INFO "Sistemas Operativos I\n");
 }
 
