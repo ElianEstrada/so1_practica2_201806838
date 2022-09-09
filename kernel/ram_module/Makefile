@@ -16,7 +16,6 @@ add:
 	sudo dmesg -C
 	sudo insmod ram_201806838.ko
 	sudo dmesg
-	cat /proc/ram_201806838
 
 remove:
 	sudo dmesg -C

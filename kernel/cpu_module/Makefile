@@ -16,7 +16,6 @@ add:
 	sudo dmesg -C
 	sudo insmod cpu_201806838.ko
 	sudo dmesg
-	cat /proc/cpu_201806838
 
 remove:
 	sudo dmesg -C
