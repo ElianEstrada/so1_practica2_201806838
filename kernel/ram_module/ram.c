@@ -14,9 +14,8 @@ char *name = "ram_201806838";
 
 static int content_file(struct seq_file *file, void *v) {
     si_meminfo(&sys_info);
-    //seq_printf(file, "{\"total\": %ld", (sys_info.totalram * 4) / 1024);
-    seq_printf(file, "{\"total\": %ld", (sys_info.totalram << PAGE_SHIFT) / (1024 * 1024));
-    seq_printf(file, ", \"used\": %ld", ((sys_info.totalram - sys_info.freeram) * 4) / 1024);
+    seq_printf(file, "{\"total\": %ld", (sys_info.totalram << PAGE_SHIFT));
+    seq_printf(file, ", \"used\": %ld", ((sys_info.totalram - sys_info.freeram) << PAGE_SHIFT));
     seq_printf(file, "}\n");
     return 0;
 }
