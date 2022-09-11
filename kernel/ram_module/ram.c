@@ -16,7 +16,7 @@ static int content_file(struct seq_file *file, void *v) {
     si_meminfo(&sys_info);
     seq_printf(file, "{\"total\": %ld", (sys_info.totalram << PAGE_SHIFT));
     seq_printf(file, ", \"used\": %ld", ((sys_info.totalram - sys_info.freeram) << PAGE_SHIFT));
-    seq_printf(file, "}\n");
+    seq_printf(file, "}");
     return 0;
 }
 
