@@ -17,7 +17,7 @@ const Table = () => {
 
     useEffect(() => {
         let id = setInterval(() => {
-            fetch('http://localhost:4000/cpu', {
+            fetch('http://34.125.218.137:4000/cpu', {
                 method: "GET"
             })
                 .then(res => res.json())
@@ -27,7 +27,7 @@ const Table = () => {
                     setCpu(data.data.cpu_usage);
                 });
 
-            fetch('http://localhost:4000/ram', {
+            fetch('http://34.125.218.137:4000/ram', {
                 method: "GET"
             })
                 .then(res => res.json())

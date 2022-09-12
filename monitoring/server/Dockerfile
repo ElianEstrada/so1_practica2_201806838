@@ -1,4 +1,4 @@
-FROM node:16.17.0
+FROM node:latest
 WORKDIR /home/server
 COPY . .
 RUN npm install
