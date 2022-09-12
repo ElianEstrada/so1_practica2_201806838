@@ -330,7 +330,7 @@ Los módulos para obtener la información del sistema se crearon en el lenguaje 
 
 + **Dockerfile:**
 
-    ```dockerfil
+    ```dockerfile
     FROM node:latest
     WORKDIR /home/server
     COPY . .
