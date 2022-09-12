@@ -26,13 +26,14 @@ static int content_file(struct seq_file *file, void *v) {
     for_each_process(task) {
 
         switch (task->__state) {
-            case 0:
+            case TASK_RUNNING:
                 count_running++;
                 break;
-            case 4:
+            case EXIT_TRACE:
+            case TASK_DEAD:
                 count_zombie++;
                 break;
-            case 8:
+            case TASK_STOPPED:
                 count_stopped++;
                 break;
             default:
@@ -41,18 +42,18 @@ static int content_file(struct seq_file *file, void *v) {
 
         if (task->mm){
             rss = get_mm_rss(task->mm) << PAGE_SHIFT;
-            seq_printf(file, "{\"pid\": %d, \"name\": %s, \"user\": %d, \"state\": %i, \"ram\": %lu, \"children\": [", task->pid, task->comm, task->cred->uid, task->__state, rss);
+            seq_printf(file, "{\"pid\": %d, \"name\": \"%s\", \"user\": %d, \"state\": %i, \"ram\": %lu, \"children\": [", task->pid, task->comm, task->cred->uid, task->__state, rss);
         } else {
-            seq_printf(file, "{\"pid\": %d, \"name\": %s, \"user\": %d, \"state\": %i, \"ram\": %d, \"children\": [", task->pid, task->comm, task->cred->uid, task->__state, 0);
+            seq_printf(file, "{\"pid\": %d, \"name\": \"%s\", \"user\": %d, \"state\": %i, \"ram\": %d, \"children\": [", task->pid, task->comm, task->cred->uid, task->__state, 0);
         }
 
         list_for_each(list, &task->children) {
             task_child = list_entry(list, struct task_struct, sibling);
 
             if (list->next == &task->children) {
-                seq_printf(file, "{\"pid\": %d, \"name\": %s }", task_child->pid, task_child->comm);
+                seq_printf(file, "{\"pid\": %d, \"name\": \"%s\" }", task_child->pid, task_child->comm);
             } else {
-                seq_printf(file, "{\"pid\": %d, \"name\": %s },", task_child->pid, task_child->comm);
+                seq_printf(file, "{\"pid\": %d, \"name\": \"%s\" },", task_child->pid, task_child->comm);
             }
         }
 

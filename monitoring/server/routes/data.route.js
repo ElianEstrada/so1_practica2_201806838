@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/cpu", (req, res) => {
 
-    const query = "SELECT content FROM cpu_module ORDER BY date_insert LIMIT 1;";
+    const query = "SELECT content FROM cpu_module ORDER BY date_insert DESC LIMIT 1;";
     try {
         connection.execute(query, (err, result) => {
             if (err) {
@@ -21,7 +21,7 @@ router.get("/cpu", (req, res) => {
 
 router.get("/ram", (req, res) => {
 
-    const query = "SELECT content FROM ram_module ORDER BY date_insert LIMIT 1;";
+    const query = "SELECT content FROM ram_module ORDER BY date_insert DESC LIMIT 1;";
     try {
         connection.execute(query, (err, result) => {
             if (err) {
